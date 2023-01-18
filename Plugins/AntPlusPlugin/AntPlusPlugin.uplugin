@@ -1,0 +1,27 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "Ant+ USB plugin",
+	"Description": "Single ANT+ channel plugin (works over USB)",
+	"Category": "Connectivity",
+	"CreatedBy": "",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "AntPlusPlugin",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+            "WhitelistPlatforms": [
+                "Win64"
+            ]
+		}
+	]
+}
