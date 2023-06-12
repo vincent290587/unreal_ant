@@ -1,21 +1,26 @@
-﻿
 # Intro
 
-- [x] Works with Unreal 5.1 on Windows
-- [ ] Adapt CMake for Mac/ Linux targets
-- [ ] Test on macOS
-- [ ] Test on Linux
+## Purpose
 
-In the current state this library only works on Windows, and can connect to a single home trainer (FEC device) of a user-defined device ID (see ANT+ documentation).
+This repo will help projects relying on ANT+ RF communications connect accessories to their Unreal Engine game projects.
+
+It relies on the official ANT+ library v3.5 and a few source files breaking out a small set of features to blueprint development.
+In order to compile these source files, a set of CMake files is provided, as well as the external plugin UE4CMake (https://github.com/caseymcc/UE4CMake).
+
+In the current state this library was only tested on Windows, and can connect to a single home trainer (FEC device) of a user-defined device ID (see ANT+ documentation).
 
 For commercial purposes please contact me :-)
 
-## Using in UE-5
+## Setup
+
+### Preparation
 
 if you don't have / know CMake, you'll need a fresh installation of it:
 <https://cmake.org/download/>
 
-- add the following text to your project's main folder .uproject file in the section Plugins:
+### Project setup
+
+- add the following text to your project's main folder .uproject file in the section Plugins (described in [https://github.com/caseymcc/UE4CMake](https://github.com/caseymcc/UE4CMake#setup)):
 
 ```text
 		{
