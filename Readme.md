@@ -73,9 +73,16 @@ New functions are now available for your blueprints:
 
 ### ANT+ FEC home trainer
 
-First, set your ANT+ home trainer device ID (16 bits unsigned) using the Blueprint block in the top.
+Here is an example implementation using a controller blueprint:
 
-In your code you can then call the second block to read the last received power from the sensor. You can also set the trainer target power or slope using the dedicated blueprint blocks.
+First, int the BeginPlay event you'll need to call "Connect to a certain power meter" ONCE (it performs the library initialization), setting your ANT+ home trainer device ID (16 bits unsigned) using the Blueprint block in the top right.
+You can define a timer that will call the library at regular intervals to get the data from the trainer and also set the ANT+ pages data (slope, target power, etc...).
+
+![Alt text](image.png)
+
+In the code running from the timer you can then call "GetHTPower" to read the last received power from the home trainer. You can also set the trainer target power or slope using the dedicated blueprint blocks.
 But DO NOT CALL THESE MORE THAN AT 2Hz !
 
-![](blueprint.png)
+![Alt text](image-2.png)
+
+This example shows only specific actions for an ANT+ home trainer device, however the provided code could be easily adapted for other types of ANT+ pages / devices !
