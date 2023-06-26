@@ -25,7 +25,8 @@ ANTrxService::~ANTrxService()
 
 	printf("Closing the Receiver!\n");
 
-	pclSerialObject->Close();
+	if(pclSerialObject)
+		pclSerialObject->Close();
 
 	if(pclMessageObject)
 		delete pclMessageObject;

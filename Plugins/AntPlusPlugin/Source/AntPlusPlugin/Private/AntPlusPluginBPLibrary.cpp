@@ -109,7 +109,15 @@ void UAntPlusPluginBPLibrary::setFECPage49(float targetPower)
     ue5_lib__sendBytes(0 /* channel 0 forced in current version */, aucTransmitBuffer);
 }
 
-void UAntPlusPluginBPLibrary::setFECPage51(float targetSlope, float targetResistance)
+typedef struct
+{
+    UCHAR aucTransmitBuffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];
+} sANT_packet;
+
+static sANT_packet page50;
+static sANT_packet page51;
+
+void UAntPlusPluginBPLibrary::setFECPage51(float targetSlope, float targetResistance, int32 aeroPercentage)
 {
     UCHAR aucTransmitBuffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];
 
@@ -118,12 +126,35 @@ void UAntPlusPluginBPLibrary::setFECPage51(float targetSlope, float targetResist
     float roll_res = 0.005f; // 0.005
     unsigned char usroll_res = (unsigned char)(targetResistance / ANT_FEC_PAGE51_ROLL_RES_LSB);
 
+    memset(&aucTransmitBuffer[0], 0xFFu, ANT_STANDARD_DATA_PAYLOAD_SIZE); // reset
+
+    aucTransmitBuffer[MESSAGE_BUFFER_DATA1_INDEX] = 50u; // page
+    aucTransmitBuffer[MESSAGE_BUFFER_DATA8_INDEX] = aeroPercentage & 0xFF; // drafting factor
+
+    memcpy(&page50.aucTransmitBuffer[0], aucTransmitBuffer, ANT_STANDARD_DATA_PAYLOAD_SIZE);
+
+    memset(&aucTransmitBuffer[0], 0xFFu, ANT_STANDARD_DATA_PAYLOAD_SIZE); // reset
+
     aucTransmitBuffer[MESSAGE_BUFFER_DATA1_INDEX] = 51u; // page
     aucTransmitBuffer[MESSAGE_BUFFER_DATA6_INDEX] = usSlope & 0xFF; // slope part 1 (LSB is 0.5 W)
     aucTransmitBuffer[MESSAGE_BUFFER_DATA7_INDEX] = (usSlope & 0xFF00) >> 8; // slope part 2
     aucTransmitBuffer[MESSAGE_BUFFER_DATA8_INDEX] = usroll_res; // rolling res
 
-    ue5_lib__sendBytes(0 /* channel 0 forced in current version */, aucTransmitBuffer);
+    memcpy(&page51.aucTransmitBuffer[0], aucTransmitBuffer, ANT_STANDARD_DATA_PAYLOAD_SIZE);
+}
 
+void UAntPlusPluginBPLibrary::updateTrainer()
+{
+    static int counter = 0;
+
+    if (counter % 4 == 0)
+    {
+        ue5_lib__sendBytes(0 /* channel 0 forced in current version */, &page50.aucTransmitBuffer[0]);
+    } else
+    {
+        ue5_lib__sendBytes(0 /* channel 0 forced in current version */, &page51.aucTransmitBuffer[0]);
+    }
+
+    counter++;
 }
 

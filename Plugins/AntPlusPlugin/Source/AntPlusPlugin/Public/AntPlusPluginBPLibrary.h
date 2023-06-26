@@ -28,7 +28,7 @@ UCLASS()
 class UAntPlusPluginBPLibrary : public UBlueprintFunctionLibrary
 {
     GENERATED_UCLASS_BODY()
-
+    
     UFUNCTION(BlueprintCallable, meta = (DisplayName = "Connect to a certain power meter", Keywords = "AntPlusPlugin power meter connect"), Category = "AntPlusPlugin")
     static int connectPowerMeterDeviceID(int devID);
 
@@ -42,7 +42,10 @@ class UAntPlusPluginBPLibrary : public UBlueprintFunctionLibrary
     static void setFECPage49(float targetPower);
 
     UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set the FEC trainer target slope", Keywords = "AntPlusPlugin FEC target slope"), Category = "AntPlusPlugin")
-    static void setFECPage51(float targetSlope, float targetResistance);
+    static void setFECPage51(float targetSlope, float targetResistance, int32 aeroPercentage);
+    
+    UFUNCTION(BlueprintCallable, meta = (DisplayName = "Update the trainer simulation", Keywords = "AntPlusPlugin simulation"), Category = "AntPlusPlugin")
+    static void updateTrainer();
 
 };
 
