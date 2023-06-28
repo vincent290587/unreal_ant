@@ -18,21 +18,26 @@ ANTrxService::ANTrxService() {
 
 ANTrxService::~ANTrxService()
 {
+    printf("Closing the Receiver!\n");
+
 	for (auto slave : mDevices)
 	{
-		pclMessageObject->CloseChannel(slave.ucAntChannel, MESSAGE_TIMEOUT);
+        if(pclMessageObject)
+		    pclMessageObject->CloseChannel(slave.ucAntChannel, MESSAGE_TIMEOUT);
 	}
 
-	printf("Closing the Receiver!\n");
-
-	if(pclSerialObject)
-		pclSerialObject->Close();
+    if(pclSerialObject)
+	    pclSerialObject->Close();
 
 	if(pclMessageObject)
 		delete pclMessageObject;
 
 	if(pclSerialObject)
 		delete pclSerialObject;
+
+    pclSerialObject = (DSISerialGeneric*)NULL;
+    pclMessageObject = (DSIFramerANT*)NULL;
+    uiDSIThread = (DSI_THREAD_ID)NULL;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -165,6 +170,10 @@ void ANTrxService::Close()
 	//Destroy mutex and condition var
 	DSIThread_MutexDestroy(&mutexTestDone);
 	DSIThread_CondDestroy(&condTestDone);
+
+    if (uiDSIThread) {
+        (void)DSIThread_DestroyThread(uiDSIThread);
+    }
 
 #if defined(DEBUG_FILE)
 	DSIDebug::Close();

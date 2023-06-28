@@ -28,8 +28,10 @@ static ANTrxService *pANTsrv = nullptr;
 static UCHAR m_current_channel = 0;
 
 int ue5_lib__startupAntPlusLib(void) {
+
+    VERIFY(pANTsrv==nullptr, -2);
     pANTsrv = new ANTrxService();
-    VERIFY(pANTsrv, -1);
+    VERIFY(pANTsrv!=nullptr, -1);
 
     m_current_channel = 0u;
 
@@ -37,6 +39,10 @@ int ue5_lib__startupAntPlusLib(void) {
 }
 
 int ue5_lib__endAntPlusLib(void) {
+    VERIFY(pANTsrv, -1);
+    pANTsrv->Close();
+    delete pANTsrv;
+    pANTsrv = nullptr;
     return 0;
 }
 
@@ -53,6 +59,8 @@ int ue5_lib__addDeviceID(unsigned short usDeviceNum,
     sInit1.ucDeviceType = ucDeviceType;
     sInit1.usDeviceNum = usDeviceNum;
     sInit1.usMessagePeriod = usMessagePeriod;
+
+    printf("Adding ANT+ slave ID %u \n", usDeviceNum);
 
     pANTsrv->AddSlave(sInit1, callback);
 
@@ -72,22 +80,20 @@ int ue5_lib__startANT(void) {
 
     VERIFY(pANTsrv, -1);
 
+    printf("Starting ANT+ lib...\n");
+
     if( pANTsrv->Init() ) {
 
         pANTsrv->Start();
-
-        //Loop(pANTsrv);
 
         return 0;
 
     } else {
 
-        delete pANTsrv;
-        pANTsrv = nullptr;
+        ue5_lib__endAntPlusLib();
 
         return -2;
     }
 
-    return 0;
 }
 
