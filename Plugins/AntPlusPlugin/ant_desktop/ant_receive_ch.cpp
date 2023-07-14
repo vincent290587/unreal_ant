@@ -162,7 +162,7 @@ void ANTrxService::Close()
 	DSIThread_MutexLock(&mutexTestDone);
 	bDone = TRUE;
 
-	UCHAR ucWaitResult = DSIThread_CondTimedWait(&condTestDone, &mutexTestDone, DSI_THREAD_INFINITE);
+	UCHAR ucWaitResult = DSIThread_CondTimedWait(&condTestDone, &mutexTestDone, 2000);
 	assert(ucWaitResult == DSI_THREAD_ENONE);
 
 	DSIThread_MutexUnlock(&mutexTestDone);

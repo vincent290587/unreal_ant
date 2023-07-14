@@ -29,9 +29,9 @@ static UCHAR m_current_channel = 0;
 
 int ue5_lib__startupAntPlusLib(void) {
 
-    VERIFY(pANTsrv==nullptr, -2);
+    VERIFY(pANTsrv == nullptr, -6);
     pANTsrv = new ANTrxService();
-    VERIFY(pANTsrv!=nullptr, -1);
+    VERIFY(pANTsrv != nullptr, -7);
 
     m_current_channel = 0u;
 
@@ -39,7 +39,7 @@ int ue5_lib__startupAntPlusLib(void) {
 }
 
 int ue5_lib__endAntPlusLib(void) {
-    VERIFY(pANTsrv, -1);
+    VERIFY(pANTsrv != nullptr, -1);
     pANTsrv->Close();
     delete pANTsrv;
     pANTsrv = nullptr;
@@ -51,7 +51,10 @@ int ue5_lib__addDeviceID(unsigned short usDeviceNum,
                 unsigned short usMessagePeriod,
                 std::function<void(UCHAR *p_aucData)> callback) {
 
-    VERIFY(pANTsrv, -1);
+    if (pANTsrv == nullptr) {
+        int ret = ue5_lib__startupAntPlusLib();
+        VERIFY(ret==0, ret);
+    }
 
     sANTrxServiceInit sInit1;
     sInit1.ucAntChannel = m_current_channel;
@@ -90,10 +93,14 @@ int ue5_lib__startANT(void) {
 
     } else {
 
-        ue5_lib__endAntPlusLib();
-
         return -2;
     }
+
+}
+
+int ue5_lib__endANT(void) {
+
+    return ue5_lib__endAntPlusLib();
 
 }
 

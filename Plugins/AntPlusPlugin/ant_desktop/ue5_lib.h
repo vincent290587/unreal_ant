@@ -11,11 +11,10 @@
 extern "C" {
 #endif // defined C++
 
-/*
- * Library functions in the order they should be used
- */
-
+	
 int ue5_lib__startupAntPlusLib(void);
+
+int ue5_lib__endAntPlusLib(void);
 
 int ue5_lib__addDeviceID(unsigned short usDeviceNum,
                 unsigned char ucDeviceType,
@@ -26,8 +25,9 @@ int ue5_lib__sendBytes(unsigned char ucChannel, unsigned char *p_aucData);
 
 int ue5_lib__startANT(void);
 
-int ue5_lib__endAntPlusLib(void);
+int ue5_lib__endANT(void);
 
+	
 #if defined(__cplusplus)
 }
 #endif // defined C++

@@ -48,13 +48,20 @@ UAntPlusPluginBPLibrary::UAntPlusPluginBPLibrary(const FObjectInitializer& Objec
 
 int UAntPlusPluginBPLibrary::connectPowerMeterDeviceID(int devID)
 {
-    ue5_lib__addDeviceID(devID,
+    return ue5_lib__addDeviceID(devID,
                                 FEC_DEVICE_TYPE,
                                 FEC_MSG_PERIOD,
                                 _pw1_callback);
+}
 
+int UAntPlusPluginBPLibrary::startupANTLib(void) {
 
     return ue5_lib__startANT();
+}
+
+int UAntPlusPluginBPLibrary::closeANTLib(void) {
+
+    return ue5_lib__endANT();
 }
 
 int UAntPlusPluginBPLibrary::getRawPower(void)

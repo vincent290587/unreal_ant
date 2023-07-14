@@ -28,6 +28,12 @@ UCLASS()
 class UAntPlusPluginBPLibrary : public UBlueprintFunctionLibrary
 {
     GENERATED_UCLASS_BODY()
+
+    UFUNCTION(BlueprintCallable, meta = (DisplayName = "Starts the ANT+ threaded data loop", Keywords = "AntPlusPlugin loop start"), Category = "AntPlusPlugin")
+    static int startupANTLib();
+
+    UFUNCTION(BlueprintCallable, meta = (DisplayName = "Closes the ANT+ data loop", Keywords = "AntPlusPlugin destroy"), Category = "AntPlusPlugin")
+    static int closeANTLib();
     
     UFUNCTION(BlueprintCallable, meta = (DisplayName = "Connect to a certain power meter", Keywords = "AntPlusPlugin power meter connect"), Category = "AntPlusPlugin")
     static int connectPowerMeterDeviceID(int devID);
