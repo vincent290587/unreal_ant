@@ -238,7 +238,7 @@ void ANTrxService::MessageThread()
 			}
 
             if (bTXwaiting &&
-                pclMessageObject->SendBroadcastData(txChannel, aucTransmitBuffer)) // SendAcknowledgedData
+                pclMessageObject->SendBroadcastData(txChannel, aucTransmitBuffer)) { // SendAcknowledgedData
                 bTXwaiting = false;
                 //printf("SendBroadcastData %u \n", aucTransmitBuffer[0]);
             }

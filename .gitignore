@@ -1,5 +1,10 @@
 bin/
 obj/
 /packages/
+Intermediate/
+Binaries/
+Content/
+Saved/
+cmake-build-debug/
 riderModule.iml
 /_ReSharper.Caches/
