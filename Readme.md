@@ -71,7 +71,7 @@ New functions are now available for your blueprints:
 
 ## Steps for using the plugin
 
-### ANT+ power meter
+### ANT+ FEC home trainer
 
 Here is an example implementation using a controller blueprint:
 
