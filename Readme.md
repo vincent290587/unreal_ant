@@ -77,15 +77,13 @@ Here is an example implementation using a controller blueprint:
 
 ![img.png](img.png)
 
+![img_1.png](img_1.png)
+
 First, int the BeginPlay event you'll need to call "Connect to a certain power meter" ONCE (it performs the library initialization), setting your ANT+ power meter device ID (16 bits unsigned) using the Blueprint block in the top right.
 Then call the function that starts the ANT+ loop (separate thread).
 You can define a timer that will call the library at regular intervals to get the data from the trainer and also set the ANT+ pages data.
 
-![Alt text](image.png)
-
 In the code running from the timer you can then call "GetHTPower" to read the last received power.
-But DO NOT CALL THESE MORE THAN AT 2Hz !
 
-![Alt text](image-2.png)
-
-This example shows only specific actions for an ANT+ home trainer device, however the provided code could be easily adapted for other types of ANT+ pages / devices !
+To send the trainer target slope, call the corresponding bloc followed by "Update the trainer simulation".  
+But DO NOT CALL "Update the trainer simulation" AT MORE THAN 2Hz !
