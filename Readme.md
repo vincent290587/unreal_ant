@@ -85,5 +85,5 @@ You can define a timer that will call the library at regular intervals to get th
 
 In the code running from the timer you can then call "GetHTPower" to read the last received power.
 
-To send the trainer target slope, call the corresponding bloc followed by "Update the trainer simulation".  
-But DO NOT CALL "Update the trainer simulation" AT MORE THAN 2Hz !
+To send the trainer target power, call the corresponding bloc "et the FEC target power".  
+But DO NOT CALL THIS BLOC AT MORE THAN 2Hz !
