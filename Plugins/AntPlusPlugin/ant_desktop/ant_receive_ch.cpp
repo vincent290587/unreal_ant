@@ -194,14 +194,15 @@ DSI_THREAD_RETURN ANTrxService::RunMessageThread(void *pvParameter_)
 	return NULL;
 }
 
-void ANTrxService::TransmitMessage(UCHAR channel, UCHAR tx_buffer[ANT_STANDARD_DATA_PAYLOAD_SIZE])
+BOOL ANTrxService::TransmitMessage(UCHAR channel, UCHAR tx_buffer[ANT_STANDARD_DATA_PAYLOAD_SIZE])
 {
     if (bTXwaiting) {
-        return;
+        return FALSE;
     }
     txChannel = channel;
     memcpy(aucTransmitBuffer, tx_buffer, ANT_STANDARD_DATA_PAYLOAD_SIZE);
     bTXwaiting = true;
+	return TRUE;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

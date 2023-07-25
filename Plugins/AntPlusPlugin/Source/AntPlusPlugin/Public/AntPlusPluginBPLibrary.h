@@ -48,10 +48,8 @@ class UAntPlusPluginBPLibrary : public UBlueprintFunctionLibrary
     static void setFECPage49(float targetPower);
 
     UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set the FEC trainer target slope", Keywords = "AntPlusPlugin FEC target slope"), Category = "AntPlusPlugin")
-    static void setFECPage51(float targetSlope, float targetResistance, int32 aeroPercentage);
+    static void setFECPage50_51(float targetSlope, float targetResistance, int32 aeroPercentage);
     
-    UFUNCTION(BlueprintCallable, meta = (DisplayName = "Update the trainer simulation", Keywords = "AntPlusPlugin simulation"), Category = "AntPlusPlugin")
-    static void updateTrainer();
 
 };
 

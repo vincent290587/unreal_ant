@@ -74,9 +74,9 @@ int ue5_lib__sendBytes(unsigned char ucChannel, unsigned char *p_aucData) {
 
     VERIFY(pANTsrv, -1);
 
-    pANTsrv->TransmitMessage(ucChannel, p_aucData); // only channel 0 supported so far
+    BOOL res = pANTsrv->TransmitMessage(ucChannel, p_aucData); // only channel 0 supported so far
 
-    return 0;
+    return res == FALSE;
 }
 
 int ue5_lib__startANT(void) {

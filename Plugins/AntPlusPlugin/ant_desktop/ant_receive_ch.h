@@ -74,7 +74,7 @@ public:
 		mDevices.push_back(ANTdevice(sInit, callback));
 	}
 
-    void TransmitMessage(UCHAR channel, UCHAR aucTransmitBuffer[ANT_STANDARD_DATA_PAYLOAD_SIZE]);
+    BOOL TransmitMessage(UCHAR channel, UCHAR aucTransmitBuffer[ANT_STANDARD_DATA_PAYLOAD_SIZE]);
 
 	void Start();
 	void Close();

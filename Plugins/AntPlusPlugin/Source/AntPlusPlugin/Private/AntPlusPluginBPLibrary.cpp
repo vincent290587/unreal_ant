@@ -121,10 +121,32 @@ typedef struct
     UCHAR aucTransmitBuffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];
 } sANT_packet;
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static sANT_packet page50;
 static sANT_packet page51;
 
-void UAntPlusPluginBPLibrary::setFECPage51(float targetSlope, float targetResistance, int32 aeroPercentage)
+
+static void _updateTrainer(void)
+{
+    static int counter = 0;
+    int res;
+
+    if (counter % 4 == 0)
+    {
+        res = ue5_lib__sendBytes(0 /* channel 0 forced in current version */, &page50.aucTransmitBuffer[0]);
+    } else
+    {
+        res = ue5_lib__sendBytes(0 /* channel 0 forced in current version */, &page51.aucTransmitBuffer[0]);
+    }
+
+    if (res==0)
+    {
+        counter++;
+    }
+}
+
+void UAntPlusPluginBPLibrary::setFECPage50_51(float targetSlope, float targetResistance, int32 aeroPercentage)
 {
     UCHAR aucTransmitBuffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];
 
@@ -148,20 +170,7 @@ void UAntPlusPluginBPLibrary::setFECPage51(float targetSlope, float targetResist
     aucTransmitBuffer[MESSAGE_BUFFER_DATA8_INDEX] = usroll_res; // rolling res
 
     memcpy(&page51.aucTransmitBuffer[0], aucTransmitBuffer, ANT_STANDARD_DATA_PAYLOAD_SIZE);
-}
 
-void UAntPlusPluginBPLibrary::updateTrainer()
-{
-    static int counter = 0;
-
-    if (counter % 4 == 0)
-    {
-        ue5_lib__sendBytes(0 /* channel 0 forced in current version */, &page50.aucTransmitBuffer[0]);
-    } else
-    {
-        ue5_lib__sendBytes(0 /* channel 0 forced in current version */, &page51.aucTransmitBuffer[0]);
-    }
-
-    counter++;
+    _updateTrainer();
 }
 
