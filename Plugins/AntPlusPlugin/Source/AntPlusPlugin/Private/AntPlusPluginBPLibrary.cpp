@@ -150,9 +150,8 @@ void UAntPlusPluginBPLibrary::setFECPage50_51(float targetSlope, float targetRes
 {
     UCHAR aucTransmitBuffer[ANT_STANDARD_DATA_PAYLOAD_SIZE];
 
-    float slope = 5.f; // 5%
-    unsigned short usSlope = (unsigned short)(targetSlope / ANT_FEC_PAGE51_SLOPE_LSB);
-    float roll_res = 0.005f; // 0.005
+    unsigned short usSlope = (unsigned short)((targetSlope / ANT_FEC_PAGE51_SLOPE_LSB) + 0x4e20);
+
     unsigned char usroll_res = (unsigned char)(targetResistance / ANT_FEC_PAGE51_ROLL_RES_LSB);
 
     memset(&aucTransmitBuffer[0], 0xFFu, ANT_STANDARD_DATA_PAYLOAD_SIZE); // reset
